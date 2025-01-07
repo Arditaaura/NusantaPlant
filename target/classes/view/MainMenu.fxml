@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane onMouseClicked="#goToLogin" prefHeight="720.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="480.0" pickOnBounds="true" preserveRatio="false">
+         <image>
+            <Image url="@../img/bgMainMenu.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="regisBtn" layoutX="157.0" layoutY="431.0" mnemonicParsing="false" onMouseClicked="#goToRegister" prefHeight="33.0" prefWidth="167.0" style="-fx-background-size: modern-button;" styleClass="modern-button" stylesheets="@style.css" text="Register" textAlignment="JUSTIFY">
+         <font>
+            <Font name="Artifakt Element Bold" size="15.0" />
+         </font></Button>
+      
+      <Button fx:id="loginBtn" layoutX="157.0" layoutY="487.0" mnemonicParsing="false" onMouseClicked="#goToLogin" prefHeight="47.0" prefWidth="167.0" stylesheets="@style.css" text="Login" textAlignment="CENTER">
+         <font>
+            <Font name="Artifakt Element Bold" size="15.0" />
+         </font></Button>
+   </children>
+</AnchorPane>

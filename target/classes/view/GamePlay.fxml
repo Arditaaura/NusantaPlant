@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="720.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GamePlayController">
+     <children>
+        <ImageView fitHeight="720.0" fitWidth="480.0" opacity="0.61" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../img/bg%20hijau%20kosong.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgPlant" fitHeight="163.0" fitWidth="161.0" layoutX="165.0" layoutY="363.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="132.0" fitWidth="111.0" layoutX="1.0" layoutY="603.0" onMouseClicked="#kasihObat" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/obat.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="111.0" fitWidth="112.0" layoutX="190.0" layoutY="595.0" onMouseClicked="#kasihPupuk" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/pupuk.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="111.0" fitWidth="112.0" layoutX="365.0" layoutY="603.0" onMouseClicked="#kasihAir" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/air.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c5b9b1" height="25.0" layoutX="24.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="98.0" />
+      <Label fx:id="labelObat" layoutX="56.0" layoutY="14.0" prefHeight="25.0" prefWidth="68.0" textAlignment="CENTER" />
+      <ImageView fitHeight="25.0" fitWidth="93.0" layoutX="25.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/obat.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c5b9b1" height="25.0" layoutX="24.0" layoutY="39.0" stroke="BLACK" strokeType="INSIDE" width="98.0" />
+      <ImageView fitHeight="25.0" fitWidth="93.0" layoutX="25.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/pupuk.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelPupuk" layoutX="56.0" layoutY="39.0" prefHeight="25.0" prefWidth="68.0" textAlignment="CENTER" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c5b9b1" height="25.0" layoutX="24.0" layoutY="64.0" stroke="BLACK" strokeType="INSIDE" width="98.0" />
+      <Label fx:id="labelAir" layoutX="56.0" layoutY="64.0" prefHeight="25.0" prefWidth="68.0" textAlignment="CENTER" />
+      <ImageView fitHeight="25.0" fitWidth="93.0" layoutX="25.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/air.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c5b9b1" height="25.0" layoutX="371.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="98.0" />
+      <Label fx:id="labelUmur" layoutX="397.0" layoutY="14.0" prefHeight="25.0" prefWidth="56.0" textAlignment="CENTER" />
+      <Label fx:id="labelHoney" layoutX="375.0" layoutY="56.0" prefHeight="17.0" prefWidth="87.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c5b9b1" height="25.0" layoutX="370.0" layoutY="52.0" stroke="BLACK" strokeType="INSIDE" width="98.0" />
+      <ImageView fx:id="honeyImg" fitHeight="25.0" fitWidth="44.0" layoutX="380.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/honey.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bintangImg" fitHeight="25.0" fitWidth="25.0" layoutX="380.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/bintang.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="inventoryImg" fitHeight="80.0" fitWidth="53.0" layoutX="24.0" layoutY="110.0" onMouseClicked="#goToInventori" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/iconInventori.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="shopImg" fitHeight="80.0" fitWidth="56.0" layoutX="408.0" layoutY="103.0" onMouseClicked="#goToShop" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/iconShop.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
