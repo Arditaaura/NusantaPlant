@@ -5,6 +5,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShopController">
    <children>
@@ -14,11 +16,23 @@
          </image>
       </ImageView>
       <ImageView fx:id="imgTanaman" fitHeight="303.0" fitWidth="200.0" layoutX="140.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="labelMadu" layoutX="12.0" layoutY="27.0" prefHeight="27.0" prefWidth="200.0" text="Label" />
-      <Label fx:id="namaTanaman" layoutX="133.0" layoutY="145.0" prefHeight="27.0" prefWidth="215.0" textAlignment="CENTER" />
+      <Label fx:id="namaTanaman" alignment="CENTER" layoutX="133.0" layoutY="165.0" prefHeight="27.0" prefWidth="215.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
       <Button fx:id="btnBeli" layoutX="133.0" layoutY="534.0" mnemonicParsing="false" onAction="#beliTanaman" prefHeight="60.0" prefWidth="200.0" stylesheets="@style.css" text="Beli" />
       <Button fx:id="btnKiri" layoutX="51.0" layoutY="348.0" mnemonicParsing="false" onAction="#gantiTanamanKeKiri" stylesheets="@style.css" text="&lt;" AnchorPane.leftAnchor="50.0" />
       <Button fx:id="btnKanan" layoutX="373.0" layoutY="348.0" mnemonicParsing="false" onAction="#gantiTanamanKeKanan" stylesheets="@style.css" text="&gt;" AnchorPane.rightAnchor="50.0" />
-      <Button fx:id="btnBack" layoutX="404.0" layoutY="42.0" mnemonicParsing="false" onAction="#backToGamePlay" text="Button" />
+      <Button fx:id="btnBack" layoutX="133.0" layoutY="609.0" mnemonicParsing="false" onAction="#backToGamePlay" prefHeight="69.0" prefWidth="200.0" stylesheets="@style.css" text="Kembali" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c5b9b1" height="25.0" layoutX="21.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" width="98.0" />
+      <Label fx:id="labelMadu" alignment="CENTER" layoutX="50.0" layoutY="41.0" prefHeight="27.0" prefWidth="68.0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <ImageView fx:id="honeyImg" fitHeight="25.0" fitWidth="44.0" layoutX="21.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/honey.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
