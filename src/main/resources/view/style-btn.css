@@ -1,0 +1,16 @@
+.button {
+    -fx-background-color:  #6C4E31;    /* Warna dasar tombol */
+    -fx-text-fill: white;            /* Warna teks */
+    -fx-font-size: 14px;             /* Ukuran font */
+    -fx-font-weight: bold;           /* Teks tebal */
+    -fx-padding: 1 1;              /* Padding (atas-bawah kiri-kanan) */
+    -fx-border-radius: 5;            /* Sudut border */
+    -fx-background-radius: 10;        /* Sudut latar belakang */
+    -fx-cursor: hand;                /* Ubah kursor menjadi pointer */
+}
+
+/* Hover effect */
+.button:hover {
+    -fx-background-color: #DE760E;   /* Warna tombol saat hover */
+}
+
