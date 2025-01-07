@@ -14,8 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Tanaman;
+import javafx.scene.Parent;
 
 /**
  * FXML Controller class
@@ -28,22 +32,51 @@ public class InventoryController implements Initializable {
     private Button gotoGameplay;
     private static int tanamanCek;
     private static Tanaman[] tanaman;
+    private static int[] plantCek;
+    @FXML
+    private ImageView img1;
+    @FXML
+    private ImageView img2;
+    @FXML
+    private ImageView img3;
+    @FXML
+    private ImageView img5;
+    @FXML
+    private ImageView img6;
+    @FXML
+    private ImageView img4;
+    @FXML
+    private ImageView img7;
+    @FXML
+    private ImageView img8;
+    @FXML
+    private ImageView img9;
+    
+    private ImageView[] img;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         tanaman = InventoryDAO.cekInventori(LoginController.user.getUid());
-         
+        img = new ImageView[]{img1, img2, img3, img4, img5, img6, img7, img8, img9};
+        tanaman = new Tanaman[9];
+        plantCek = InventoryDAO.cekInventori(LoginController.user.getUid());
+        for(int i = 0; i < 9; i++){
+            if(plantCek[i] != 0){
+                tanaman[i] = new Tanaman(plantCek[i]);  
+            }  
+        }
+        memunculkanTanaman();
         // TODO
     } 
     
     public static void setTanaman(Tanaman plant){
-        tanaman = InventoryDAO.cekInventori(LoginController.user.getUid());
-        int i =0;
-        while(i < 9){
-            if (tanaman[i] == null){
-                InventoryDAO.menyimpanTanaman(plant.getTanaman_id(), i);
+        plantCek = InventoryDAO.cekInventori(LoginController.user.getUid());
+        
+        for(int i = 0;i < 9; i++){
+            if (plantCek[i] == 0){
+                InventoryDAO.menyimpanTanaman(plant.getTanaman_id(), i, LoginController.user.getUid());
                 break;
             }
-            i ++;
         }
     }
     @FXML
@@ -54,4 +87,15 @@ public class InventoryController implements Initializable {
         stage.setScene(scene);
     }
     
+    public void memunculkanTanaman(){
+        for (int i = 0; i < 9; i++){
+            if(plantCek[i] != 0){
+                System.out.println("NAMA TANAMAN: " + tanaman[i].getNama() );
+                Image img = new Image("/img/" + tanaman[i].getNama() +"3.png");
+                this.img[i].setImage(img);
+            }
+        }
+    }
+
+ 
 }
