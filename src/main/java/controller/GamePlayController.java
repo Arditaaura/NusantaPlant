@@ -34,7 +34,8 @@ import model.User;
 
 public class GamePlayController implements Initializable {
 
-    
+    @FXML
+    private Button logOut;
     @FXML
     private Label labelObat;
     public  int kesehatanCount;
@@ -73,46 +74,41 @@ public class GamePlayController implements Initializable {
         
         // TODO
         this.user = LoginController.user;
-        int plant = UserDAO.validateTanaman_id(user.getUsername());
+        int plant = UserDAO.validateTanaman_id(user.getUid());
         statusSekarang = StatusDAO.getStatus(user.getUid());
         System.out.println(statusSekarang[1]);
         System.out.println(statusSekarang[2]);
         System.out.println(statusSekarang[3]);
         
         System.out.println("Plant ID: " + plant);
-    System.out.println("Status Sekarang: " + java.util.Arrays.toString(statusSekarang));
-    
-    if (statusSekarang == null || statusSekarang.length < 4) {
-        System.out.println("Status data tidak valid. Tanaman tidak akan diatur.");
-        tanaman = null;
-        return;
-    }
-        
-//        try {
-//            cekUmur(status[0]);
-//        } catch (IOException ex) {
-//            Logger.getLogger(GamePlayController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        
+        System.out.println("Status Sekarang: " + java.util.Arrays.toString(statusSekarang));
+
+        if (statusSekarang == null || statusSekarang.length < 4) {
+            System.out.println("Status data tidak valid. Tanaman tidak akan diatur.");
+            tanaman = null;
+            return;
+        }
+        honeyCount = user.getPoin();
+        System.out.println("honey " + honeyCount);
         memunculkanGambarTanaman(plant);
        
-        //**if(statusSekarang[0]==0 && tanaman != null){
-            //updateLabel("kodisiPertama");
-//} else
-if(statusSekarang[0]==3 && tanaman != null){
+        if(statusSekarang[0]==3 && tanaman != null){
             updateLabel("kodisiDewasa");
+            
         }else{
             updateLabel("umur");
             updateLabel("haus");
             updateLabel("lapar");
             updateLabel("kesehatan");
         }
+        
+        updateLabel("honey");
     }    
 
     @FXML
     private void kasihObat(MouseEvent event) throws IOException {
         if(tanaman != null){
-                 if(kesehatanCount < 5  && umurCount < 3){
+                 if(kesehatanCount < tanaman.getBatasSehat()  && umurCount < 3){
                 kesehatanCount += 1;
                 updateLabel("kesehatan");
                 tanaman.setKesehatan(kesehatanCount, user.getUid());
@@ -124,7 +120,7 @@ if(statusSekarang[0]==3 && tanaman != null){
     @FXML
     private void kasihPupuk(MouseEvent event) throws IOException {
         if(tanaman != null){
-            if(laparCount < 5  && umurCount < 3){
+            if(laparCount < tanaman.getBatasLapar()  && umurCount < 3){
                 laparCount += 1;
                 updateLabel("lapar");
                 tanaman.setKelaparan(laparCount, user.getUid());
@@ -136,7 +132,7 @@ if(statusSekarang[0]==3 && tanaman != null){
     @FXML
     private void kasihAir(MouseEvent event) throws IOException {
         if(tanaman != null){
-            if(hausCount <  5 && umurCount < 3){
+            if(hausCount <  tanaman.getBatasHaus() && umurCount < 3){
                 hausCount += 1;
                 updateLabel("haus");
                 tanaman.setHaus(hausCount, user.getUid());
@@ -149,6 +145,10 @@ if(statusSekarang[0]==3 && tanaman != null){
         if(tanaman != null){
             if(tipeStatus.equals("umur")){
                 labelUmur.setText(String.valueOf(umurCount));
+            }else if(tipeStatus.equals("honey")){
+            
+                labelHoney.setText(String.valueOf(honeyCount));
+            
             }else if(tipeStatus.equals("kondisiPertama")){
                 labelAir.setText(String.valueOf(hausCount) + "/" + tanaman.getBatasHaus());
                 labelPupuk.setText(String.valueOf(laparCount) + " / " + tanaman.getBatasLapar());
@@ -168,19 +168,25 @@ if(statusSekarang[0]==3 && tanaman != null){
                 labelPupuk.setText("-");
                 labelObat.setText("-");
                 labelUmur.setText(String.valueOf(umurCount));
+            }else if(tipeStatus.equals("kondisiKosong")){
+                labelAir.setText("-");
+                labelPupuk.setText("-");
+                labelObat.setText("-");
+                labelUmur.setText("-");
             }
         }else{
             labelAir.setText("-");
             labelPupuk.setText("-");
             labelObat.setText("-");
             labelUmur.setText("-");
+            labelHoney.setText(String.valueOf(honeyCount));
         }
             
     }
     
     public void tambahUmurTanaman( UUID uid) throws IOException{
          
-        if(hausCount == 5 && laparCount == 5 && kesehatanCount == 5){
+        if(hausCount == tanaman.getBatasHaus() && laparCount == tanaman.getBatasLapar() && kesehatanCount == tanaman.getBatasSehat()){
             if (umurCount < 2){
                 umurCount += 1;
                 //kondisiPertama(uid);
@@ -195,9 +201,10 @@ if(statusSekarang[0]==3 && tanaman != null){
                 umurCount += 1;
                 tanaman.setUmur(umurCount, uid);
                 updateLabel("kodisiDewasa");
-                cekUmur();
+                
                 Image img = new Image("/img/" + tanaman.getNama() + umurCount + ".png");
                 imgPlant.setImage(img);
+                cekUmur();
             }
         } 
     }
@@ -207,7 +214,7 @@ if(statusSekarang[0]==3 && tanaman != null){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PopupJualAtauSimpan.fxml"));
         Parent popupRoot = fxmlLoader.load();
         Stage popupStage = new Stage();
-
+        popupStage.initOwner((Stage)imgPlant.getScene().getWindow());
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setTitle("Pop-up");
 
@@ -248,15 +255,14 @@ if(statusSekarang[0]==3 && tanaman != null){
         laparCount = statusSekarang[2];
         kesehatanCount = statusSekarang[3];
         
-         System.out.println("Memunculkan gambar tanaman dengan tipe: " + tipe);
-    System.out.println("Umur: " + umurCount + ", Haus: " + hausCount + ", Lapar: " + laparCount + ", Kesehatan: " + kesehatanCount);
+        System.out.println("Memunculkan gambar tanaman dengan tipe: " + tipe);
+        System.out.println("Umur: " + umurCount + ", Haus: " + hausCount + ", Lapar: " + laparCount + ", Kesehatan: " + kesehatanCount);
        // if(umurCount == 0){
          //   kondisiPertama(user.getUid());
         //}
         
         if(tipe != 0){
             tanaman  = new Tanaman(tipe, umurCount , hausCount, laparCount, kesehatanCount);
-            kondisiPertama(user.getUid());
             Image img = new Image("/img/" + tanaman.getNama() + umurCount + ".png");
             imgPlant.setImage(img);
         }else{
@@ -268,31 +274,39 @@ if(statusSekarang[0]==3 && tanaman != null){
 
     @FXML
     private void goToShop(MouseEvent event) throws IOException {
-        if(tanaman == null){
-        System.out.println("tanaman belum diatur");
-        return;
-        }
-        if(tanaman.getUmur() == 3){
-            cekUmur();
+        if(tanaman != null){
+            if(tanaman.getUmur() == 3){
+                cekUmur();
+            }else{
+                Stage stage = (Stage) shopImg.getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/view/Shop.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.setTitle("Shop");
+                stage.setScene(scene);
+            }
         }else{
             Stage stage = (Stage) shopImg.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/view/Shop.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("Shop");
             stage.setScene(scene);
-        }
+        }        
     }
 
     @FXML
     private void goToInventori(MouseEvent event) throws IOException {
-       if(tanaman == null){
-        System.out.println("tanaman belum diatur");
-        return;
-        }
-        
-        if(tanaman.getUmur() == 3){
-            cekUmur();
+        if(tanaman != null){
+            if(tanaman.getUmur() == 3){
+                cekUmur();
+            }else{
+                Stage stage = (Stage) inventoryImg.getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/view/inventory.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.setTitle("Inventory");
+                stage.setScene(scene);
+            }
         }else{
+            
             Stage stage = (Stage) inventoryImg.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/view/inventory.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -300,22 +314,25 @@ if(statusSekarang[0]==3 && tanaman != null){
             stage.setScene(scene);
         }
     }
-    public static void updateHoney(int jumlah){
-        honeyCount = jumlah;
-    }
-    public static int getHoney(){
-        return honeyCount;
-    }
     public void setTanaman(Tanaman plant){
         if(plant == null){
             tanaman = null;
             imgPlant.setImage(null);
-            updateLabel("kondisiDewasa");
+            updateLabel("kondisiKosong");
         }else{
             tanaman = plant;
             Image img = new Image("/img/" + tanaman.getNama() + "0.png");
             imgPlant.setImage(img);
             updateLabel("kondisiDewasa");
         }
+    }
+    @FXML
+    public void gotoMainMenu () throws IOException{
+        UUID userId = LoginController.getUser ().getUid();
+        StatusDAO.updateLastExitTime(userId);
+        Stage stage = (Stage) logOut.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(RegisterController.class.getResource("/view/MainMenu.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
     }
 }
