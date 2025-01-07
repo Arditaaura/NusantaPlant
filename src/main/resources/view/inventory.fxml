@@ -12,5 +12,14 @@
             <Image url="@../img/bgInven.png" />
          </image></ImageView>
       <Button fx:id="gotoGameplay" layoutX="155.0" layoutY="624.0" mnemonicParsing="false" onMouseClicked="#backtoGameplay" prefHeight="47.0" prefWidth="171.0" stylesheets="@style.css" text="Back" />
+      <ImageView fx:id="img1" fitHeight="103.0" fitWidth="111.0" layoutX="38.0" layoutY="168.0" onMouseClicked="#sellTanaman1" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="38.0" />
+      <ImageView fx:id="img2" fitHeight="103.0" fitWidth="111.0" layoutX="185.0" layoutY="168.0" onMouseClicked="#sellTanaman2" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img3" fitHeight="103.0" fitWidth="111.0" layoutX="326.0" layoutY="168.0" onMouseClicked="#sellTanaman3" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="38.0" />
+      <ImageView fx:id="img5" fitHeight="103.0" fitWidth="111.0" layoutX="185.0" layoutY="309.0" onMouseClicked="#sellTanaman5" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img6" fitHeight="103.0" fitWidth="111.0" layoutX="331.0" layoutY="309.0" onMouseClicked="#sellTanaman6" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img4" fitHeight="103.0" fitWidth="111.0" layoutX="38.0" layoutY="309.0" onMouseClicked="#sellTanaman4" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img7" fitHeight="103.0" fitWidth="111.0" layoutX="38.0" layoutY="457.0" onMouseClicked="#sellTanaman7" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img8" fitHeight="103.0" fitWidth="111.0" layoutX="185.0" layoutY="457.0" onMouseClicked="#sellTanaman8" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img9" fitHeight="103.0" fitWidth="111.0" layoutX="331.0" layoutY="457.0" onMouseClicked="#sellTanaman9" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
