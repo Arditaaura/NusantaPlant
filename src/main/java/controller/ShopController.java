@@ -4,7 +4,9 @@
  */
 package controller;
 
+import dao.StatusDAO;
 import dao.TanamanDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Tanaman;
+import model.User;
 
 /**
  * FXML Controller class
@@ -49,54 +52,79 @@ public class ShopController implements Initializable {
     private Button btnBeli;
     @FXML
     private Button btnBack;
+    
+    private User user;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.user = LoginController.user;
         jumlahTanaman = TanamanDAO.jumlahDBTanaman();
-        for(int i = 0; i < jumlahTanaman-1; i++){
-            tanaman[i] = new Tanaman (i);
+        System.out.println("jumlah tanaman "+ jumlahTanaman);
+        tanaman = new Tanaman[jumlahTanaman];
+        for(int i = 0; i < jumlahTanaman; i++){
+            tanaman[i] = new Tanaman (i+1);
+            System.out.println("tanaman id = "+ tanaman[i].getNama());
         }
         // TODO
         memunculkanGambar();
+        labelMadu.setText(String.valueOf(LoginController.user.getPoin()));
     }    
 
 
     @FXML
     private void gantiTanamanKeKiri(ActionEvent event) {
-        if(posisiTanaman < 0){
+        if(posisiTanaman == 0){
             posisiTanaman = jumlahTanaman-1;
             
         }else{
-            posisiTanaman -= 1;
+            posisiTanaman --;
         }
         memunculkanGambar();
     }
 
     @FXML
     private void gantiTanamanKeKanan(ActionEvent event) {
-        if(posisiTanaman > jumlahTanaman-1){
+        if(posisiTanaman == jumlahTanaman-1){
             posisiTanaman = 0;
             
         }else{
-            posisiTanaman += 1;
+            posisiTanaman ++;
         }
         memunculkanGambar();
     }
 
     @FXML
     private void beliTanaman(ActionEvent event) {
-        GamePlayController.tanaman=tanaman[posisiTanaman];
-        int honey = GamePlayController.getHoney();
-        GamePlayController.updateHoney(honey - tanaman[posisiTanaman].getHargaBeli());
+        int i = UserDAO.validateTanaman_id(user.getUid());
+        if(i == 0){
+            GamePlayController.tanaman = tanaman[posisiTanaman];
+            System.out.println("tanaman id"+ tanaman[posisiTanaman].getTanaman_id());
+            System.out.println("id tanaman "+ tanaman[posisiTanaman].getTanaman_id());
+            UserDAO.updateTanamanId(user.getUid(), tanaman[posisiTanaman].getTanaman_id());
+            TanamanDAO.TransaksiBibit(user.getUid(),tanaman[posisiTanaman].getTanaman_id());
+            StatusDAO.newTanaman(user.getUid(),tanaman[posisiTanaman].getTanaman_id());
+            int honey = user.getPoin();
+            LoginController.user.setPoin(honey - tanaman[posisiTanaman].getHargaBeli());
+            labelMadu.setText(String.valueOf(user.getPoin()));
+        }
     }
     
     private void memunculkanGambar(){
-        Image img = new Image("/img/" + tanaman[posisiTanaman].getNama() + "3.png");
-        imgTanaman.setImage(img);
-        namaTanaman.setText(tanaman[posisiTanaman].getNama());
-        btnBeli.setText(String.valueOf(tanaman[posisiTanaman].getHargaBeli()));
+        if (tanaman[posisiTanaman] != null) {
+            Image img = new Image("/img/" + tanaman[posisiTanaman].getNama() + "3.png");
+            imgTanaman.setImage(img);
+            namaTanaman.setText(tanaman[posisiTanaman].getNama());
+            btnBeli.setText(String.valueOf(tanaman[posisiTanaman].getHargaBeli()));
+            if(LoginController.user.getPoin() < tanaman[posisiTanaman].getHargaBeli() ){
+                btnBeli.setDisable(true);
+            }else{
+                btnBeli.setDisable(false);
+            }
+        } else {
+            System.out.println("Tanaman at index " + posisiTanaman + " is null.");
+        } 
     }
 
     @FXML
